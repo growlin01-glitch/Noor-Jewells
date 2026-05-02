@@ -29,40 +29,39 @@ export default function ProductCard({ product }: ProductCardProps) {
       className="group relative"
     >
       <div className="relative aspect-[4/5] overflow-hidden bg-stone-100 mb-4">
-        {product.images[0] && (
-          <Image
-            src={product.images[0].src}
-            alt={product.images[0].alt || product.name}
-            fill
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-            referrerPolicy="no-referrer"
-          />
-        )}
+        <Link href={`/product/${product.slug}`} className="block h-full w-full relative z-10">
+          {product.images[0] && (
+            <Image
+              src={product.images[0].src}
+              alt={product.images[0].alt || product.name}
+              fill
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+              referrerPolicy="no-referrer"
+            />
+          )}
+        </Link>
         
         {/* Sale Badge */}
         {product.on_sale && (
-           <span className="absolute top-4 left-4 bg-brand-gold text-white text-[10px] uppercase tracking-widest px-3 py-1 z-10">
+           <span className="absolute top-4 left-4 bg-brand-gold text-white text-[10px] uppercase tracking-widest px-3 py-1 z-20">
              Sale
            </span>
         )}
 
-        {/* Quick Actions Overlay */}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 z-20">
+        {/* Quick Actions Overlay - Hidden on mobile pointers */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 z-20 pointer-events-none md:pointer-events-auto">
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
             <button
-              onClick={() => addItem(product)}
-              className="w-12 h-12 bg-white text-brand-dark flex items-center justify-center rounded-full shadow-xl hover:bg-brand-gold hover:text-white transition-all transform hover:scale-110"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                addItem(product);
+              }}
+              className="w-12 h-12 bg-white text-brand-dark flex items-center justify-center rounded-full shadow-xl hover:bg-brand-gold hover:text-white transition-all transform hover:scale-110 pointer-events-auto"
               title="Add to Cart"
             >
               <ShoppingBag className="w-5 h-5" />
             </button>
-            <Link
-              href={`/product/${product.slug}`}
-              className="w-12 h-12 bg-white text-brand-dark flex items-center justify-center rounded-full shadow-xl hover:bg-brand-dark hover:text-white transition-all transform hover:scale-110"
-              title="View Details"
-            >
-              <Eye className="w-5 h-5" />
-            </Link>
           </div>
         </div>
       </div>

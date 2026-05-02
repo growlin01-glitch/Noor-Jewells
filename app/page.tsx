@@ -68,37 +68,43 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Featured Categories */}
-      <section className="py-24 px-6 md:px-12 bg-white">
+      {/* Simplified Categories & Products Navigation */}
+      <section className="py-20 px-6 md:px-12 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-12">
-            <div className="space-y-4">
-              <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold">Curated Selection</span>
-              <h2 className="text-4xl md:text-5xl font-serif">Signature Categories</h2>
+          <div className="flex flex-col items-center mb-20">
+            <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold mb-4">The Collection</span>
+            <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+              {categories.slice(0, 4).map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/category/${category.slug}`}
+                  className="group relative"
+                >
+                  <h3 className="text-xl md:text-3xl font-serif tracking-wide group-hover:text-brand-gold transition-colors">
+                    {category.name}
+                  </h3>
+                  <div className="absolute -bottom-2 left-0 w-0 h-px bg-brand-gold group-hover:w-full transition-all duration-500" />
+                </Link>
+              ))}
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.slice(0, 4).map((category, index) => (
+          <div className="space-y-12">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <h2 className="text-3xl md:text-5xl font-serif">The Nooré Edit</h2>
               <Link
-                key={category.id}
-                href={`/category/${category.slug}`}
-                className="group relative aspect-[3/4] overflow-hidden"
+                href="/shop"
+                className="text-[10px] uppercase tracking-widest font-bold border-b border-brand-dark pb-1 hover:text-brand-gold hover:border-brand-gold transition-all"
               >
-                <Image
-                  src={category.image?.src || `https://picsum.photos/seed/${category.slug}/800/1000`}
-                  alt={category.name}
-                  fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-110"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute bottom-8 left-8 right-8 text-white z-10 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                  <p className="text-[10px] uppercase tracking-[0.2em] mb-2 opacity-0 group-hover:opacity-80 transition-opacity">Explore</p>
-                  <h3 className="text-3xl font-serif tracking-wide">{category.name}</h3>
-                </div>
+                View Full Catalog
               </Link>
-            ))}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -133,31 +139,6 @@ export default async function Home() {
             className="object-cover"
             referrerPolicy="no-referrer"
           />
-        </div>
-      </section>
-
-      {/* Featured Products */}
-      <section className="py-24 px-6 md:px-12 bg-[#fcfbf7]">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 space-y-4">
-             <span className="text-[10px] uppercase tracking-[0.3em] text-brand-gold font-bold">New Arrivals</span>
-             <h2 className="text-4xl md:text-5xl font-serif">The Aura Edit</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-
-          <div className="mt-16 text-center">
-            <Link
-              href="/shop"
-              className="inline-block px-12 py-5 border border-brand-dark/20 text-xs uppercase tracking-widest font-semibold hover:bg-brand-dark hover:text-white transition-all"
-            >
-              View Full Collection
-            </Link>
-          </div>
         </div>
       </section>
 
